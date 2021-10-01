@@ -1,6 +1,14 @@
 //chat.js
 module.exports = (io, socket, onlineUsers) => {
 
+    socket.on('user changed channel', (newChannel) => {
+        socket.join(newChannel);
+        socket.emit('user changed channel', {
+          channel : newChannel,
+          messages : channels[newChannel]
+        });
+      });
+
     socket.on('new user', (username) => {
       //Save the username as key to access the user's socket id
       onlineUsers[username] = socket.id;
