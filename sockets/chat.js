@@ -1,13 +1,7 @@
 //chat.js
 module.exports = (io, socket, onlineUsers) => {
 
-    socket.on('user changed channel', (newChannel) => {
-        socket.join(newChannel);
-        socket.emit('user changed channel', {
-          channel : newChannel,
-          messages : channels[newChannel]
-        });
-      });
+    
 
     socket.on('new user', (username) => {
       //Save the username as key to access the user's socket id
@@ -36,9 +30,6 @@ module.exports = (io, socket, onlineUsers) => {
     delete onlineUsers[socket.username]
     io.emit('user has left', onlineUsers);
   });
-  socket.on('new channel', (newChannel) => {
-    console.log(newChannel);
-  });
 
   socket.on('new channel', (newChannel) => {
     //Save the new channel to our channels object. The array will hold the messages.
@@ -53,6 +44,12 @@ module.exports = (io, socket, onlineUsers) => {
       messages : channels[newChannel]
     });
   });
-  
+//   socket.on('user changed channel', (newChannel) => {
+//     socket.join(newChannel);
+//     socket.emit('user changed channel', {
+//       channel : newChannel,
+//       messages : channels[newChannel]
+//     });
+//   });
   }
   
