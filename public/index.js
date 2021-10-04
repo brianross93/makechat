@@ -1,8 +1,9 @@
 //index.js
 $(document).ready(()=>{
-    const socket = io.connect();
+  const socket = io.connect();
   let currentUser;
   socket.emit('get online users');
+  socket.emit('show all channels');
   //Each user should be in the general channel by default.
   socket.emit('user changed channel', "General");
 
@@ -82,6 +83,17 @@ $(document).ready(()=>{
 socket.on('new channel', (newChannel) => {
     $('.channels').append(`<div class="channel">${newChannel}</div>`);
   });
+
+socket.on("show all channels", (channels) => {
+  for(channel in channels){
+    $(".channels").append(`<div class="channel">${channel}</div>`);
+  }
+})
+
+// socket.on('show channel', (showChannel) => {
+//   for(channel in channels) {
+//   $('.channels').append('<div class="channel">${showChannels}</div>')
+// }})
   
   // Make the channel joined the current channel. Then load the messages.
   // This only fires for the client who made the channel.
